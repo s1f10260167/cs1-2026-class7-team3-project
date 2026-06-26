@@ -1,12 +1,37 @@
-body{
-    background-color:#121212;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+    color: #2C3E50;
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    line-height: 1.8;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* タイトル部分 */
+.genre-title {
+    background: linear-gradient(135deg, #4A6572, #5DADE2);
+    padding: 50px 20px;
+    text-align: center;
+    color: #FFFFFF;
 }
     
 h1{
     color: #F5F5F5;
+    
 }
 
 ul{
     color: #F5F5F5;
 }
 
+h2{
+    color: #F5F5F5;
+}
+
+p{
+    color: #F5F5F5;
+}
