@@ -23,6 +23,7 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     main {
@@ -99,6 +100,8 @@
       gap: 20px;
       opacity: 0;
       animation: fadeInUp 1s forwards ease-out;
+      position: relative;
+      transition: outline 0.2s, box-shadow 0.2s;
     }
 
     section:nth-of-type(1) { animation-delay: 0.2s; }
@@ -140,7 +143,61 @@
     .desc {
       flex: 1 1 300px;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .roulette-container {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .roulette-btn {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .roulette-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+    }
+
+    .roulette-btn:active {
+      transform: scale(0.95);
+    }
+
+    .fav-btn {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f43f5e;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
       align-items: center;
+      gap: 8px;
+      margin-top: 15px;
+      transition: all 0.2s;
+    }
+
+    .fav-btn:hover {
+      background-color: rgba(244, 63, 94, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .active-card {
+      outline: 4px solid #38bdf8;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
     }
 
     @keyframes fadeInDown {
@@ -159,44 +216,151 @@
   <main>
     <nav class="ranking-nav">
       <h2>アニメランキング</h2>
+      <div class="roulette-container">
+        <button class="roulette-btn" id="rouletteTrigger">今日観るアニメを迷ったらコレ！</button>
+      </div>
       <ol>
         <li><a href="#anime1"><span class="rank-num">1</span> BEASTARS</a></li>
         <li><a href="#anime2"><span class="rank-num">2</span> 葬送のフリーレン</a></li>
-        <li><a href="#anime3"><span class="rank-num">3</span> コードギアス</a></li>
+        <li><a href="#anime3"><span class="rank-num">3</span> 転生したらスライムだった件</a></li>
       </ol>
     </nav>
 
     <section id="anime1">
       <h2>1位 BEASTARS</h2>
       <div class="img-wrapper">
-        <img src="https://picsum.photos/id/1025/600/400" alt="BEASTARS">
+        <img src="beastars.jpg" alt="BEASTARS">
       </div>
       <div class="desc">
         <p>肉食獣と草食獣が共存する世界を舞台にした、珠玉の動物版ヒューマンドラマ。本能と理性の間で揺れ動くキャラクターたちの心理描写が非常に秀逸で、一度見始めたら止まらなくなります。</p>
+        <button class="fav-btn">❤️ 推し！ (<span class="count">0</span>)</button>
       </div>
     </section>
 
     <section id="anime2">
       <h2>2位 葬送のフリーレン</h2>
       <div class="img-wrapper">
-        <img src="https://picsum.photos/id/1043/600/400" alt="フリーレン">
+        <img src="huri-ren.jpg" alt="フリーレン">
       </div>
       <div class="desc">
         <p>魔王を倒した「その後」の世界を描く、後日譚ファンタジー。エルフであるフリーレンの長い寿命を通じて描かれる「人間の心を知る旅」は、優しくてどこか切ない魅力があります。</p>
+        <button class="fav-btn">❤️ 推し！ (<span class="count">0</span>)</button>
       </div>
     </section>
 
     <section id="anime3">
       <h2>3位 転生したらスライムだった件</h2>
       <div class="img-wrapper">
-        <img src="https://picsum.photos/id/1059/600/400" alt="転生したらスライムだった件">
+        <img src="tensura.jpg" alt="転生したらスライムだった件">
       </div>
       <div class="desc">
         <p>通り魔に刺されて死亡したサラリーマンが異世界にスライムとして転生し、自身の能力や前世の知識を駆使して、種族を問わず誰もが楽しく暮らせる国造りに奔走するファンタジー作品</p>
+        <button class="fav-btn">❤️ 推し！ (<span class="count">0</span>)</button>
       </div>
     </section>
 
+    
   </main>
 
+  <script>
+    const rouletteTrigger = document.getElementById('rouletteTrigger');
+    const sections = document.querySelectorAll('main > section');
+    let isRolling = false;
+
+    rouletteTrigger.addEventListener('click', () => {
+      if (isRolling) return;
+      isRolling = true;
+      let count = 0;
+      let speed = 60;
+      let currentSelection = 0;
+
+      const interval = setInterval(() => {
+        sections.forEach(s => s.classList.remove('active-card'));
+        currentSelection = count % sections.length;
+        sections[currentSelection].classList.add('active-card');
+        count++;
+      }, speed);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        setTimeout(() => {
+          sections.forEach(s => s.classList.remove('active-card'));
+          const finalIndex = Math.floor(Math.random() * sections.length);
+          const targetSection = sections[finalIndex];
+          targetSection.classList.add('active-card');
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          isRolling = false;
+        }, 100);
+      }, 1500);
+    });
+
+    document.querySelectorAll('.fav-btn').forEach(btn => {
+      const countSpan = btn.querySelector('.count');
+      const words = ['尊い…', 'それな！', '神作', '語彙力消失', '最高か？', '全人類見て'];
+      
+      btn.addEventListener('click', (e) => {
+        let currentCount = parseInt(countSpan.textContent);
+        countSpan.textContent = currentCount + 1;
+
+        const pop = document.createElement('div');
+        pop.innerText = words[Math.floor(Math.random() * words.length)];
+        pop.style.position = 'fixed';
+        pop.style.left = e.clientX + 'px';
+        pop.style.top = e.clientY + 'px';
+        pop.style.color = '#f43f5e';
+        pop.style.fontWeight = 'bold';
+        pop.style.fontSize = '18px';
+        pop.style.pointerEvents = 'none';
+        pop.style.zIndex = '9999';
+        pop.style.transition = 'all 0.6s ease-out';
+        document.body.appendChild(pop);
+
+        requestAnimationFrame(() => {
+          pop.style.transform = `translate(${(Math.random() - 0.5) * 80}px, -60px) scale(1.2)`;
+          pop.style.opacity = '0';
+        });
+
+        setTimeout(() => pop.remove(), 600);
+      });
+    });
+
+    document.querySelectorAll('.ranking-nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const x = e.clientX;
+        const y = e.clientY;
+        for (let i = 0; i < 15; i++) {
+          createParticle(x, y);
+        }
+      });
+    });
+
+    function createParticle(x, y) {
+      const particle = document.createElement('div');
+      const emojis = ['✨', '🌟', '🐾', '🌿', '💧', '⚔️'];
+      particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      particle.style.position = 'fixed';
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      particle.style.fontSize = Math.random() * 20 + 10 + 'px';
+      particle.style.pointerEvents = 'none';
+      particle.style.zIndex = '9999';
+      
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = Math.random() * 80 + 40;
+      const tx = Math.cos(angle) * velocity;
+      const ty = Math.sin(angle) * velocity - 50;
+      
+      particle.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+      document.body.appendChild(particle);
+      
+      requestAnimationFrame(() => {
+        particle.style.transform = `translate(${tx}px, ${ty}px) rotate(${Math.random() * 360}deg) scale(0)`;
+        particle.style.opacity = '0';
+      });
+      
+      setTimeout(() => particle.remove(), 800);
+    }
+  </script>
 </body>
 </html>
