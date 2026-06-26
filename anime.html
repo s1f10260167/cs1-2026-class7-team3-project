@@ -1,25 +1,202 @@
-<h2>ランキング</h2>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>おすすめアニメランキング</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --text-color: #f8fafc;
+      --accent-color: #38bdf8;
+      --card-bg: #1e293b;
+    }
 
-<ol>
-  <li><a href="#anime1">葬送のフリーレン</a></li>
-  <li><a href="#anime2">STEINS;GATE</a></li>
-  <li><a href="#anime3">コードギアス</a></li>
-</ol>
+    html {
+      scroll-behavior: smooth;
+    }
 
-<section id="anime1">
-  <h2>1位 葬送のフリーレン</h2>
-  <img src="frieren.jpg" alt="フリーレン">
-  <p>感想・説明...</p>
-</section>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
 
-<section id="anime2">
-  <h2>2位 STEINS;GATE</h2>
-  <img src="steinsgate.jpg" alt="STEINS;GATE">
-  <p>感想・説明...</p>
-</section>
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
 
-<section id="anime3">
-  <h2>3位 コードギアス</h2>
-  <img src="geass.jpg" alt="コードギアス">
-  <p>感想・説明...</p>
-</section>
+    h1, h2 {
+      letter-spacing: 2px;
+    }
+
+    .ranking-nav {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      margin-bottom: 60px;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .ranking-nav h2 {
+      text-align: center;
+      margin-top: 0;
+      color: var(--accent-color);
+      font-size: 28px;
+    }
+
+    .ranking-nav ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .ranking-nav li a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text-color);
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 15px 25px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      border-left: 5px solid transparent;
+    }
+
+    .ranking-nav li a:hover {
+      background-color: rgba(56, 189, 248, 0.1);
+      border-left: 5px solid var(--accent-color);
+      transform: translateX(10px);
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .rank-num {
+      font-size: 24px;
+      color: var(--accent-color);
+      margin-right: 15px;
+      font-style: italic;
+    }
+
+    section {
+      background-color: var(--card-bg);
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 50px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      opacity: 0;
+      animation: fadeInUp 1s forwards ease-out;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.2s; }
+    section:nth-of-type(2) { animation-delay: 0.4s; }
+    section:nth-of-type(3) { animation-delay: 0.6s; }
+
+    section h2 {
+      width: 100%;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+      padding-bottom: 10px;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    section#anime1 h2 { color: #ffd700; } 
+    section#anime2 h2 { color: #c0c0c0; } 
+    section#anime3 h2 { color: #cd7f32; } 
+
+    .img-wrapper {
+      flex: 1 1 300px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .img-wrapper:hover img {
+      transform: scale(1.1);
+    }
+
+    .desc {
+      flex: 1 1 300px;
+      display: flex;
+      align-items: center;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <nav class="ranking-nav">
+      <h2>アニメランキング</h2>
+      <ol>
+        <li><a href="#anime1"><span class="rank-num">1</span> BEASTARS</a></li>
+        <li><a href="#anime2"><span class="rank-num">2</span> 葬送のフリーレン</a></li>
+        <li><a href="#anime3"><span class="rank-num">3</span> コードギアス</a></li>
+      </ol>
+    </nav>
+
+    <section id="anime1">
+      <h2>1位 BEASTARS</h2>
+      <div class="img-wrapper">
+        <img src="https://picsum.photos/id/1025/600/400" alt="BEASTARS">
+      </div>
+      <div class="desc">
+        <p>肉食獣と草食獣が共存する世界を舞台にした、珠玉の動物版ヒューマンドラマ。本能と理性の間で揺れ動くキャラクターたちの心理描写が非常に秀逸で、一度見始めたら止まらなくなります。</p>
+      </div>
+    </section>
+
+    <section id="anime2">
+      <h2>2位 葬送のフリーレン</h2>
+      <div class="img-wrapper">
+        <img src="https://picsum.photos/id/1043/600/400" alt="フリーレン">
+      </div>
+      <div class="desc">
+        <p>魔王を倒した「その後」の世界を描く、後日譚ファンタジー。エルフであるフリーレンの長い寿命を通じて描かれる「人間の心を知る旅」は、優しくてどこか切ない魅力があります。</p>
+      </div>
+    </section>
+
+    <section id="anime3">
+      <h2>3位 転生したらスライムだった件</h2>
+      <div class="img-wrapper">
+        <img src="https://picsum.photos/id/1059/600/400" alt="転生したらスライムだった件">
+      </div>
+      <div class="desc">
+        <p>通り魔に刺されて死亡したサラリーマンが異世界にスライムとして転生し、自身の能力や前世の知識を駆使して、種族を問わず誰もが楽しく暮らせる国造りに奔走するファンタジー作品</p>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
